@@ -8,7 +8,7 @@ symfony composer install --no-scripts
 
 ### Справочная информация.
 
-#### Выполнять в контейнере #microservice_name#
+#### Выполнять в контейнере
 
 ```shell
 php bin/console doctrine:database:create
