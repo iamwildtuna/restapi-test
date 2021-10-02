@@ -1,0 +1,68 @@
+version: "3.5"
+services:
+  test-nginx:
+    image: nginx:alpine
+    tty: true
+    container_name: test-nginx
+    working_dir: /application
+    volumes:
+      - ./nginx/logs:/var/log/nginx/
+      - ./application/nginx.conf:/etc/nginx/conf.d/default.conf
+    networks:
+      - test-net
+    ports:
+      - "8801:80"
+
+  rest-api-test:
+    tty: true
+    build: php-fpm
+    container_name: rest-api-test
+    working_dir: /application
+    mem_limit: 4096m
+    networks:
+      - test-net
+    volumes:
+     - ./application:/application
+
+  test-postgresql:
+    image: postgres
+    container_name: test-postgresql
+    restart: always
+    networks:
+      - test-net
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_PASSWORD: 123456789
+
+  test-jaeger:
+    image: jaegertracing/all-in-one:1.7
+    container_name: test-jaeger
+    restart: on-failure
+    networks:
+      - test-net
+    ports:
+      - 6831:6831/udp
+      - 6832:6832/udp
+      - 16686:16686
+    command: [
+        "--log-level=debug"
+    ]
+
+  test-redis:
+    image: redis:latest
+    container_name: test-redis
+    networks:
+      - test-net
+    ports:
+      - "6379:6379"
+    command: >
+      redis-server /usr/local/etc/redis/redis.conf
+      --requirepass 123456789
+    volumes:
+      - ./data/redis/data:/data
+      - ./redis/redis.conf:/usr/local/etc/redis/redis.conf
+
+networks:
+  test-net:
+    name: test-net

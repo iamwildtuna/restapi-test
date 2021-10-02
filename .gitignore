@@ -1,0 +1,4 @@
+data
+redis/data
+nginx/logs
+.idea

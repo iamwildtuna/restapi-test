@@ -1,0 +1,14 @@
+* text eol=crlf
+*.php text eol=crlf
+*.json text eol=crlf
+*.env text eol=crlf
+*.md text eol=crlf
+*.lock text eol=crlf
+*.yaml text eol=crlf
+*.gitignore text eol=crlf
+*.gitattributes text eol=crlf
+.gitlab-ci.yml text eol=lf
+.ci_env text eol=lf
+docker-compose.yml text eol=lf
+composer.lock ext eol=lf
+symfony.lock ext eol=lf

@@ -1,0 +1,22 @@
+monolog:
+  channels: [ gelf ]
+  handlers:
+    main:
+      type: fingers_crossed
+      action_level: error
+      handler: nested
+      channels: [ "!event", "!gelf" ]
+    nested:
+      type: stream
+      path: "php://stderr"
+      level: debug
+    console:
+      type: console
+    gelf:
+      level: info
+      type: gelf
+      channels: [ "gelf" ]
+      formatter: gelf_app_formatter
+      publisher:
+        hostname: '%env(string:GRAYLOG_HOST)%'
+        port: '%env(string:GRAYLOG_PORT)%'
