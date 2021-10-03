@@ -37,6 +37,7 @@ class JaegerSubscriber implements EventSubscriberInterface
             $this->host,
             $this->port,
             $request_id,
+            $request->getUri(),
             $parent_span_id
         );
 

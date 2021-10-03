@@ -28,9 +28,10 @@ class Tracer
      * @param  string  $host
      * @param  string  $port
      * @param  string  $request_id
+     * @param  string  $path
      * @param  int  $parent_span_id
      */
-    public function __construct(string $name, string $host, string $port, string $request_id = '', int $parent_span_id = 0)
+    public function __construct(string $name, string $host, string $port, string $request_id = '', string $path = '', int $parent_span_id = 0)
     {
         $this->host = $host;
         $this->port = $port;
@@ -54,6 +55,9 @@ class Tracer
 
         $tagRequestId = new Tag('requestId', $request_id);
         $this->addTag($tagRequestId);
+
+        $tagPath = new Tag('path', $path);
+        $this->addTag($tagPath);
     }
 
     /**
